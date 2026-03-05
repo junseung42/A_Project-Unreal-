@@ -6,6 +6,7 @@
 #include "MyCharacter.h"			          // MyCharacter 해더
 #include "Engine/OverlapResult.h"	          // FOverlapResult 구조체 정의 포함
 #include "BehaviorTree/BlackboardComponent.h" // BlackboardComponent 쓰기
+#include "Enemy.h"
 
 
 // 생성자
@@ -58,6 +59,18 @@ void UBTService_SearchTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 				// MyCharacter이다면 실행1
 				if (Player)
 				{
+					// 타겟이 있다면 실행
+					if (!bHadTarget)
+					{
+						if (AEnemy* Enemy = Cast<AEnemy>(Pawn))
+						{
+							Enemy->ResetCombo();
+						}
+					}
+
+					// 다시 실행 되지 않게 상태변경
+					bHadTarget = true;
+					
 					// 디버그
 					DrawDebugSphere(GetWorld(), Center, SearchDistance, 10, FColor::Green, false, 0.5f);
 
@@ -66,6 +79,10 @@ void UBTService_SearchTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 					return;
 				}
 			}
+
+			// 탐지 범위 나갔을때 변수 초기화
+			bHadTarget = false;
+
 			// 디버그 
 			DrawDebugSphere(GetWorld(), Center, SearchDistance, 10, FColor::Red, false, 0.5f);
 

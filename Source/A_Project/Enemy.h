@@ -68,7 +68,13 @@ public:
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 #pragma endregion
 
-// 상태변경 함수
+// 공격콤보 리셋(첫 타는 1번 공격모션)
+#pragma region Attack Combo Reset (1 attack per first attack)
+public:
+	void ResetCombo() { bAttack_1 = false; }  // 다음 공격은 1타부터
+#pragma endregion
+
+// 상태반환 함수
 #pragma region State change function
 public:
 	bool GetIsAttacking() const { return bIsAttacking; }

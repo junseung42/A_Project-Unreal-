@@ -14,6 +14,10 @@ class A_PROJECT_API UBTService_SearchTarget : public UBTService
 {
 	GENERATED_BODY()
 
+
+public:
+	bool bHadTarget = false;
+
 // »ý¼ºÀÚ
 #pragma region Constructor
 public:
